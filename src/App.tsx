@@ -1,9 +1,13 @@
+import Login from './pages/Login'
 import './App.css'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import ErrorPage from './pages/ErrorPage'
 import IntroMessage from './pages/IntroMessage'
 import { Route, Routes } from 'react-router-dom'
+import SignUp from './pages/SignUp'
+import { ProtectedRoutes } from './components/ProtectedRoutes'
+import MyPage from './pages/MyPage'
 
 function App() {
 	return (
@@ -11,6 +15,16 @@ function App() {
 			<Navbar />
 			<Routes>
 				<Route path='/' element={<IntroMessage />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/sign-up' element={<SignUp />} />
+				<Route
+					path='/my-page/bikes/:userId'
+					element={
+						<ProtectedRoutes>
+							<MyPage />
+						</ProtectedRoutes>
+					}
+				/>
 
 				<Route path='*' element={<ErrorPage />} />
 			</Routes>
