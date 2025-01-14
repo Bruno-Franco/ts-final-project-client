@@ -41,7 +41,7 @@ type Bike = {
 	vin?: string
 	plate?: string
 	model?: string
-	family?: string | 'Sportster'
+	family?: string
 	apointments?: Appointment[]
 }
 type Date = any | null
@@ -226,6 +226,8 @@ function MyPage() {
 					}),
 				}
 			)
+			getBikesAfterBook()
+			setSelectedDate('')
 			let data = await response.json()
 			console.log(data)
 		} catch (err) {
@@ -346,13 +348,8 @@ function MyPage() {
 											})
 										}}
 									>
-										<option
-											value='none'
-											selected
-											disabled
-											hidden
-										>
-											Select a Bike Family
+										<option value='none' selected>
+											Choose a Bike Family!
 										</option>
 										<option value='Sportster'>
 											Sportster
@@ -433,18 +430,18 @@ function MyPage() {
 													)
 												}}
 											/>
-											{bike.apointments?.length > 0 ? (
+											{bike.apointments &&
+											bike.apointments?.length > 0 ? (
 												<Button
 													disabled
-													variant='secondary'
+													variant='outline'
 													className='my-3'
 													onClick={() => {
 														console.log(selectDate)
-														setSelectedDate('')
 														bookBike(bike)
 													}}
 												>
-													Book
+													Booked!!!
 												</Button>
 											) : (
 												<Button
@@ -452,9 +449,7 @@ function MyPage() {
 													className='my-3'
 													onClick={() => {
 														console.log(selectDate)
-														setSelectedDate('')
 														bookBike(bike)
-														getBikesAfterBook()
 													}}
 												>
 													Book
@@ -463,7 +458,8 @@ function MyPage() {
 										</TableCell>
 
 										<TableCell className='text-center'>
-											{bike.apointments?.length > 0
+											{bike.apointments &&
+											bike.apointments?.length > 0
 												? bike.apointments[0].preferredDate
 														.split('')
 														.splice(0, 10)
@@ -613,8 +609,6 @@ function MyPage() {
 																<option
 																	value='none'
 																	selected
-																	disabled
-																	hidden
 																>
 																	Select an
 																	Option

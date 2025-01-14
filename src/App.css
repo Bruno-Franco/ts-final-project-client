@@ -23,6 +23,12 @@
 .logo.react:hover {
 	filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.image-intro {
+	background-image: url(../public/service.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.5;
+}
 
 @keyframes logo-spin {
 	from {
@@ -38,7 +44,12 @@
 		animation: logo-spin infinite 20s linear;
 	}
 }
-
+a {
+	color: #27272a;
+}
+a:hover {
+	color: #71717a;
+}
 .card {
 	padding: 2em;
 }
