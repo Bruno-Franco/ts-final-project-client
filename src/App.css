@@ -49,4 +49,9 @@
 
 .intro-h {
 	height: calc(100vh - 116px);
+	overflow: auto;
+}
+.datepicker-input::-webkit-calendar-picker-indicator {
+	filter: invert(0.5);
+	cursor: pointer;
 }
