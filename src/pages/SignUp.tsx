@@ -19,6 +19,7 @@ function SignUp() {
 	async function handleNewUser(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 		console.log('>>>>>>>>>>>', newUser)
+		console.log('>>>>>>>>>>>', APIURL)
 		// create user
 		// always include headers
 		await fetch(`${APIURL}/auth/signup`, {
