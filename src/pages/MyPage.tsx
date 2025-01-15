@@ -34,7 +34,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface Appointment {
 	id: number
-	date: string
+	preferredDate: string
 }
 
 type Bike = {
@@ -113,21 +113,28 @@ function MyPage() {
 	///////////////////////
 	//////////////////////
 	// CREATE BIKE
-	async function createBike(crBike: Bike) {
+	async function createBike(crBike: Bike | null) {
 		try {
-			const bikeToSend = {
-				vin: crBike.vin,
-				model: crBike.model,
-				family: crBike.family,
-				plate: crBike.plate,
+			if (crBike) {
+				const bikeToSend = {
+					vin: crBike.vin,
+					model: crBike.model,
+					family: crBike.family,
+					plate: crBike.plate,
+				}
+				let sendBike = await fetch(
+					`${APIURL}/my-page/bikes/${userId}`,
+					{
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(bikeToSend),
+					}
+				)
+				let response = await sendBike.json()
+				if (myBikes) {
+					setMyBikes([...myBikes, response])
+				}
 			}
-			let sendBike = await fetch(`${APIURL}/my-page/bikes/${userId}`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(bikeToSend),
-			})
-			let response = await sendBike.json()
-			setMyBikes([...myBikes, response])
 		} catch (err) {
 			console.log(err)
 		}
