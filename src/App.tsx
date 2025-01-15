@@ -8,7 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 import SignUp from './pages/SignUp'
 import { ProtectedRoutes } from './components/ProtectedRoutes'
 import MyPage from './pages/MyPage'
-
+import MyProfile from './pages/MyProfile'
 function App() {
 	return (
 		<div className='h-screen'>
@@ -18,10 +18,18 @@ function App() {
 				<Route path='/login' element={<Login />} />
 				<Route path='/sign-up' element={<SignUp />} />
 				<Route
-					path='/my-page/bikes/:userId'
+					path='/my-bikes/bikes/:userId'
 					element={
 						<ProtectedRoutes>
 							<MyPage />
+						</ProtectedRoutes>
+					}
+				/>
+				<Route
+					path='/my-profile/users/:userId'
+					element={
+						<ProtectedRoutes>
+							<MyProfile />
 						</ProtectedRoutes>
 					}
 				/>

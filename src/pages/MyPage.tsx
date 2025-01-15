@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/dialog'
 import { Trash2Icon, Edit3Icon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'react-router-dom'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface Appointment {
 	id: number
@@ -45,18 +46,18 @@ type Bike = {
 	apointments?: Appointment[]
 }
 type Date = any | null
-type Appointments = {
-	preferredDate?: any
-	userId?: string
-	bikeId?: string
-}
+// type Appointments = {
+// 	preferredDate?: any
+// 	userId?: string
+// 	bikeId?: string
+// }
 function MyPage() {
 	const { user } = useContext(AuthContext)
 
 	const [selectDate, setSelectedDate] = useState<Date | null>(null)
-	const [appointments, SetAppointments] = useState<Appointments[] | null>(
-		null
-	)
+	// const [appointments, SetAppointments] = useState<Appointments[] | null>(
+	// 	null
+	// )
 	const [bike, setBike] = useState<Bike | null>(null)
 	const [bikeUpdated, setBikeUpdated] = useState<Bike | null>(null)
 	const [myBikes, setMyBikes] = useState<Bike[] | undefined>([])
@@ -70,31 +71,31 @@ function MyPage() {
 					`${APIURL}/my-page/bikes/${userId}`
 				)
 				let data = await getMyBikes.json()
-				console.log('data received', data)
+				// console.log('data received', data)
 
 				setMyBikes(data)
 			} catch (error) {}
 		}
 
-		async function getAppointments() {
-			try {
-				let response = await fetch(
-					`${APIURL}/my-page/appointments/${userId}`,
-					{
-						method: 'GET',
-						headers: {
-							Accept: 'application/jon',
-						},
-					}
-				)
-				let data = await response.json()
+		// async function getAppointments() {
+		// 	try {
+		// 		let response = await fetch(
+		// 			`${APIURL}/my-page/appointments/${userId}`,
+		// 			{
+		// 				method: 'GET',
+		// 				headers: {
+		// 					Accept: 'application/jon',
+		// 				},
+		// 			}
+		// 		)
+		// 		let data = await response.json()
 
-				SetAppointments(data)
-			} catch (err) {
-				console.log(err)
-			}
-		}
-		getAppointments()
+		// 		SetAppointments(data)
+		// 	} catch (err) {
+		// 		console.log(err)
+		// 	}
+		// }
+		// getAppointments()
 		getBikes()
 	}, [user.id])
 
@@ -102,10 +103,12 @@ function MyPage() {
 		try {
 			let getMyBikes = await fetch(`${APIURL}/my-page/bikes/${userId}`)
 			let data = await getMyBikes.json()
-			console.log('data received', data)
+			// console.log('data received', data)
 
 			setMyBikes(data)
-		} catch (error) {}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	///////////////////////
 	//////////////////////
@@ -138,7 +141,7 @@ function MyPage() {
 			throw new Error('Bike ID is missing')
 		}
 
-		console.log(`Deleting bike with ID: ${dlBike.id}`)
+		// console.log(`Deleting bike with ID: ${dlBike.id}`)
 		try {
 			let delBike = await fetch(`${APIURL}/my-page/bikes/${userId}`, {
 				method: 'DELETE',
@@ -151,8 +154,8 @@ function MyPage() {
 			if (!delBike.ok) {
 				throw new Error(`Failed to delete bike: ${delBike.statusText}`)
 			}
-			let response = await delBike.json()
-			console.log('Response from API:', response)
+			// let response = await delBike.json()
+			// console.log('Response from API:', response)
 			let updatedArr = myBikes?.filter((bike) => dlBike.id !== bike.id)
 
 			setMyBikes(updatedArr)
@@ -175,7 +178,7 @@ function MyPage() {
 			throw new Error('Bike object or ID is missing')
 		}
 
-		console.log(`Updating bike with ID: ${bikeUpdated?.id}`)
+		// console.log(`Updating bike with ID: ${bikeUpdated?.id}`)
 		try {
 			let response = await fetch(`${APIURL}/my-page/bikes/${userId}`, {
 				method: 'PUT',
@@ -199,8 +202,8 @@ function MyPage() {
 			})
 			setMyBikes(updateArr)
 
-			let responseData = await response.json()
-			console.log('Bike updated successfully:', responseData)
+			// let responseData = await response.json()
+			// console.log('Bike updated successfully:', responseData)
 		} catch (err) {
 			console.log(err)
 		}
@@ -212,7 +215,7 @@ function MyPage() {
 	async function bookBike(booBike: Bike) {
 		console.log(`Booked for bike and day`, booBike, selectDate)
 		try {
-			let response = await fetch(
+			/*let response = */ await fetch(
 				`${APIURL}/my-page/appointments/${userId}`,
 				{
 					method: 'POST',
@@ -228,12 +231,13 @@ function MyPage() {
 			)
 			getBikesAfterBook()
 			setSelectedDate('')
-			let data = await response.json()
-			console.log(data)
+			// let data = await response.json()
+			// console.log(data)
 		} catch (err) {
 			console.log(err)
 		}
 	}
+	console.log(user.avatar)
 
 	///////////////////////
 	/////////////////////////////////////////////
@@ -243,6 +247,14 @@ function MyPage() {
 		<div className='intro-h'>
 			<div>
 				<h1>Hey, {user.firstName.toUpperCase()}!</h1>
+				<span className='inline-block'>
+					<Avatar>
+						<AvatarImage
+							src={user.avatar && user.avatar.toLowerCase()}
+						/>
+						<AvatarFallback>CN</AvatarFallback>
+					</Avatar>
+				</span>
 			</div>
 			<Card className='max-w-[1000px] m-auto mt-10 mb-20'>
 				<CardHeader>
@@ -279,7 +291,7 @@ function MyPage() {
 										placeholder='Your VIN is on the Bikes Chassis'
 										value={bike?.vin}
 										onChange={(e) => {
-											console.log(e.target.value)
+											// console.log(e.target.value)
 
 											setBike({
 												...bike,
@@ -299,7 +311,7 @@ function MyPage() {
 										placeholder='Your Model: Ex Street Bob'
 										value={bike?.model}
 										onChange={(e) => {
-											console.log(e.target.value)
+											// console.log(e.target.value)
 
 											setBike({
 												...bike,
@@ -319,7 +331,7 @@ function MyPage() {
 										placeholder='Your Plate Number'
 										value={bike?.plate}
 										onChange={(e) => {
-											console.log(e.target.value)
+											// console.log(e.target.value)
 
 											setBike({
 												...bike,
@@ -340,7 +352,7 @@ function MyPage() {
 										value={bike?.family}
 										className='flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1'
 										onChange={(e) => {
-											console.log(e.target.value)
+											// console.log(e.target.value)
 
 											setBike({
 												...bike,
@@ -419,7 +431,7 @@ function MyPage() {
 											{bike.family}
 										</TableCell>
 										<TableCell className='text-center'>
-											<Input
+											{/* <Input
 												className='datepicker-input flex h-9 w-[150px] items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm '
 												type='date'
 												value={selectDate}
@@ -429,31 +441,62 @@ function MyPage() {
 														e.target.value
 													)
 												}}
-											/>
+											/> */}
 											{bike.apointments &&
 											bike.apointments?.length > 0 ? (
-												<Button
-													disabled
-													variant='outline'
-													className='my-3'
-													onClick={() => {
-														console.log(selectDate)
-														bookBike(bike)
-													}}
-												>
-													Booked!!!
-												</Button>
+												<>
+													<Input
+														disabled
+														className='datepicker-input flex h-9 w-[150px] items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm '
+														type='date'
+														value={selectDate}
+														placeholder='Select you date'
+														onChange={(e) => {
+															setSelectedDate(
+																e.target.value
+															)
+														}}
+													/>
+													<Button
+														disabled
+														variant='outline'
+														className='my-3 text-red-600'
+														onClick={() => {
+															// console.log(
+															// 	selectDate
+															// )
+															bookBike(bike)
+														}}
+													>
+														Booked!!!
+													</Button>
+												</>
 											) : (
-												<Button
-													variant='secondary'
-													className='my-3'
-													onClick={() => {
-														console.log(selectDate)
-														bookBike(bike)
-													}}
-												>
-													Book
-												</Button>
+												<>
+													<Input
+														className='datepicker-input flex h-9 w-[150px] items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm '
+														type='date'
+														value={selectDate}
+														placeholder='Select you date'
+														onChange={(e) => {
+															setSelectedDate(
+																e.target.value
+															)
+														}}
+													/>
+													<Button
+														variant='secondary'
+														className='my-3'
+														onClick={() => {
+															// console.log(
+															// 	selectDate
+															// )
+															bookBike(bike)
+														}}
+													>
+														Book
+													</Button>
+												</>
 											)}
 										</TableCell>
 
@@ -591,10 +634,10 @@ function MyPage() {
 																onChange={(
 																	e
 																) => {
-																	console.log(
-																		e.target
-																			.value
-																	)
+																	// console.log(
+																	// 	e.target
+																	// 		.value
+																	// )
 
 																	setBikeUpdated(
 																		{

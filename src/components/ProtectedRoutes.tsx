@@ -8,6 +8,6 @@ export function ProtectedRoutes({ children }: { children: ReactNode }) {
 	if (isLoggedIn) {
 		return <div>{children}</div>
 	} else {
-		return <Navigate to='/login' />
+		return <Navigate to='/' />
 	}
 }

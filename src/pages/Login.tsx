@@ -35,11 +35,11 @@ function Login() {
 			let data = await response.json()
 
 			if (data.password === 'NothingToShow') {
-				console.log(data)
+				// console.log(data)
 				setIsLoggedIn(true)
 				setUser(data)
 				printUser()
-				navigate(`/my-page/bikes/${data.id}`)
+				navigate(`/my-bikes/bikes/${data.id}`)
 				setLogMessage('')
 			}
 		} catch (error) {
