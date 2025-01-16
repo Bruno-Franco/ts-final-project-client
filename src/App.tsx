@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp'
 import { ProtectedRoutes } from './components/ProtectedRoutes'
 import MyPage from './pages/MyPage'
 import MyProfile from './pages/MyProfile'
+import MyAppointments from './pages/MyAppointments'
 function App() {
 	return (
 		<div className='h-screen'>
@@ -30,6 +31,14 @@ function App() {
 					element={
 						<ProtectedRoutes>
 							<MyProfile />
+						</ProtectedRoutes>
+					}
+				/>
+				<Route
+					path='/my-appointments/users/:userId'
+					element={
+						<ProtectedRoutes>
+							<MyAppointments />
 						</ProtectedRoutes>
 					}
 				/>

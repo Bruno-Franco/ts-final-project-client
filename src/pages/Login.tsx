@@ -35,7 +35,7 @@ function Login() {
 			let data = await response.json()
 
 			if (data.password === 'NothingToShow') {
-				// console.log(data)
+				console.log('from my login page', data)
 				setIsLoggedIn(true)
 				setUser(data)
 				printUser()

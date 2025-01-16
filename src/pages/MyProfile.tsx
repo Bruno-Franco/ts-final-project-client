@@ -42,7 +42,7 @@ const initialState = {
 }
 
 function MyProfile() {
-	const { user } = useContext(AuthContext)
+	const { user, setUser } = useContext(AuthContext)
 	const APIURL = import.meta.env.VITE_APIURL
 	// const [userFromDb, setUserFromDb] = useState<User | initialState>(
 	// 	initialState
@@ -88,6 +88,10 @@ function MyProfile() {
 				}
 			)
 			let data = await response.json()
+			const { firstName, lastName, address, avatar, phone } = data
+			console.log('from my profile page', user)
+
+			setUser({ ...user, firstName, lastName, address, avatar, phone })
 			setUpdatedUser(data)
 		} catch (err) {
 			console.log(err)

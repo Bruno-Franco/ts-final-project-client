@@ -18,7 +18,7 @@ function Navbar() {
 				/>
 			</NavLink>
 			{isLoggedIn ? (
-				<div className='w-[450px] flex items-center justify-between'>
+				<div className='w-[550px] flex items-center justify-between'>
 					<a href={`tel:`}>
 						<Button>
 							<PhoneCallIcon className='mr-2' />
@@ -40,6 +40,10 @@ function Navbar() {
 					|{' '}
 					<NavLink to={`/my-profile/users/${user.id}`}>
 						<p>My Profile</p>
+					</NavLink>
+					|{' '}
+					<NavLink to={`/my-appointments/users/${user.id}`}>
+						<p>My Appointments</p>
 					</NavLink>
 				</div>
 			) : (

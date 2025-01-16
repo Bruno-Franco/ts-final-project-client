@@ -52,7 +52,7 @@ type Date = any | null
 // 	bikeId?: string
 // }
 function MyPage() {
-	const { user } = useContext(AuthContext)
+	const { user, setUser } = useContext(AuthContext)
 
 	const [selectDate, setSelectedDate] = useState<Date | null>(null)
 	// const [appointments, SetAppointments] = useState<Appointments[] | null>(
@@ -103,8 +103,9 @@ function MyPage() {
 		try {
 			let getMyBikes = await fetch(`${APIURL}/my-page/bikes/${userId}`)
 			let data = await getMyBikes.json()
-			// console.log('data received', data)
 
+			// update user initial state
+			setUser({ ...user, bikes: data })
 			setMyBikes(data)
 		} catch (error) {
 			console.log(error)
@@ -132,6 +133,8 @@ function MyPage() {
 				)
 				let response = await sendBike.json()
 				if (myBikes) {
+					// add bikes to user initial state when log in
+					setUser({ ...user, bikes: [...myBikes, response] })
 					setMyBikes([...myBikes, response])
 				}
 			}
@@ -165,6 +168,8 @@ function MyPage() {
 			// console.log('Response from API:', response)
 			let updatedArr = myBikes?.filter((bike) => dlBike.id !== bike.id)
 
+			// update user initial state
+			setUser({ ...user, bikes: updatedArr })
 			setMyBikes(updatedArr)
 		} catch (err) {
 			console.log(err)
@@ -207,6 +212,8 @@ function MyPage() {
 					return bike
 				}
 			})
+			// update user initial state
+			setUser({ ...user, bikes: updateArr })
 			setMyBikes(updateArr)
 
 			// let responseData = await response.json()
@@ -244,7 +251,6 @@ function MyPage() {
 			console.log(err)
 		}
 	}
-	console.log(user.avatar)
 
 	///////////////////////
 	/////////////////////////////////////////////
