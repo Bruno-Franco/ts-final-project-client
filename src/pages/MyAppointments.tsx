@@ -88,7 +88,7 @@ function MyAppointments() {
 			events: user.bikes.map((bike: any) => {
 				return {
 					id: bike.apointments[0].id,
-					title: `Service ${bike.plate} ${bike.name}`,
+					title: `Service ${bike.plate} ${bike.model}`,
 					start: `${bike.apointments[0].preferredDate
 						.split('')
 						.splice(0, 10)
