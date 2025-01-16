@@ -13,25 +13,18 @@ import { createEventsServicePlugin } from '@schedule-x/events-service'
 import CustomTimeGridEvent from '../components/CustomTimeGridEvent.tsx'
 import CustomDateGridEvent from '../components/CustomDateGridEvent.tsx'
 
+// type Eve = {
+// 	// id: string
+// 	title: string
+// 	start: string
+// 	end: string
+// }
 function MyAppointments() {
 	const eventsService = useState(() => createEventsServicePlugin())[0]
 	const { user } = useContext(AuthContext)
-	// const [eventsArr, setEventsArr] = useState<Eve | null>(null)
-	const scheduleStruture = user.bikes.map((bike: any) => {
-		return {
-			id: bike.apointments[0].id,
-			title: `Service ${bike.plate} ${bike.name}`,
-			start: `${bike.apointments[0].preferredDate
-				.split('')
-				.splice(0, 10)
-				.join('')} 09:00`,
-			end: `${bike.apointments[0].preferredDate
-				.split('')
-				.splice(0, 10)
-				.join('')} 17:00`,
-		}
-	})
-	console.log(scheduleStruture)
+	// const [eventsArr, setEventsArr] = useState()
+
+	// console.log('>>>>>>>>>>>>>>', eventsArr)
 
 	const calendar = useCalendarApp({
 		dayBoundaries: {
@@ -66,7 +59,28 @@ function MyAppointments() {
 			createViewMonthGrid(),
 			createViewMonthAgenda(),
 		],
-		events: scheduleStruture,
+		// events: [
+		// 	{
+		// 		id: 'cm5zijva400030g2vrdf6c27l',
+		// 		title: 'Service NEW3 undefined',
+		// 		start: '2025-01-17 10:00',
+		// 		end: '2025-01-17 16:00',
+		// 	},
+		// ],
+		events: user.bikes.map((bike: any) => {
+			return {
+				id: bike.apointments[0].id,
+				title: `Service ${bike.plate} ${bike.name}`,
+				start: `${bike.apointments[0].preferredDate
+					.split('')
+					.splice(0, 10)
+					.join('')} 10:00`,
+				end: `${bike.apointments[0].preferredDate
+					.split('')
+					.splice(0, 10)
+					.join('')} 16:00`,
+			}
+		}),
 
 		theme: 'shadcn',
 		plugins: [eventsService],
@@ -74,6 +88,22 @@ function MyAppointments() {
 
 	useEffect(() => {
 		// get all events
+		// let scheduleStruture = user.bikes.map((bike: any) => {
+		// 	return {
+		// 		id: bike.apointments[0].id,
+		// 		title: `Service ${bike.plate} ${bike.name}`,
+		// 		start: `${bike.apointments[0].preferredDate
+		// 			.split('')
+		// 			.splice(0, 10)
+		// 			.join('')} 10:00`,
+		// 		end: `${bike.apointments[0].preferredDate
+		// 			.split('')
+		// 			.splice(0, 10)
+		// 			.join('')} 16:00`,
+		// 	}
+		// })
+
+		// setEventsArr(scheduleStruture)
 		eventsService.getAll()
 	}, [])
 
