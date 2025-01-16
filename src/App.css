@@ -66,3 +66,12 @@ a:hover {
 	filter: invert(0.5);
 	cursor: pointer;
 }
+/* SCHELUDER X CALENDAR */
+.sx-react-calendar-wrapper {
+	margin: auto;
+	width: 1200px;
+	min-width: 350px;
+	max-width: 100vw;
+	height: 600px;
+	max-height: calc(100vh - 116px);
+}

@@ -73,6 +73,7 @@ function MyPage() {
 				let data = await getMyBikes.json()
 				// console.log('data received', data)
 
+				// setUser({ ...user, bikes: data })
 				setMyBikes(data)
 			} catch (error) {}
 		}
