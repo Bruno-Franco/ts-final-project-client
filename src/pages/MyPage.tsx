@@ -499,7 +499,6 @@ function MyPage() {
 														}}
 													/>
 													<Button
-														variant='secondary'
 														className='my-3'
 														onClick={() => {
 															// console.log(
