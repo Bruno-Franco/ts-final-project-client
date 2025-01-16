@@ -89,7 +89,6 @@ function MyProfile() {
 			)
 			let data = await response.json()
 			const { firstName, lastName, address, avatar, phone } = data
-			console.log('from my profile page', user)
 
 			setUser({ ...user, firstName, lastName, address, avatar, phone })
 			setUpdatedUser(data)

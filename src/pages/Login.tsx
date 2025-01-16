@@ -19,7 +19,7 @@ type IsUser = {
 
 function Login() {
 	const { setIsLoggedIn, setUser, printUser } = useContext(AuthContext)
-	const [isUser, setIsUser] = useState<IsUser | undefined>(undefined)
+	const [isUser, setIsUser] = useState<IsUser | null>(null)
 	let navigate = useNavigate()
 	const [logMessage, setLogMessage] = useState('')
 	const APIURL = import.meta.env.VITE_APIURL
@@ -32,10 +32,15 @@ function Login() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(isUser),
 			})
+
 			let data = await response.json()
 
+			// this if statement came from auth routes!!
+			if (data.message === 'No access!') {
+				setLogMessage(`Access DENIED!!`)
+			}
+
 			if (data.password === 'NothingToShow') {
-				console.log('from my login page', data)
 				setIsLoggedIn(true)
 				setUser(data)
 				printUser()
@@ -43,7 +48,7 @@ function Login() {
 				setLogMessage('')
 			}
 		} catch (error) {
-			setLogMessage(`Wrong Credentials!`)
+			setLogMessage(`Access DENIED!!`)
 		}
 	}
 

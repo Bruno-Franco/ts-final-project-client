@@ -373,7 +373,7 @@ function MyPage() {
 											})
 										}}
 									>
-										<option value='none' selected>
+										<option value='none' defaultValue={''}>
 											Choose a Bike Family!
 										</option>
 										<option value='Sportster'>
