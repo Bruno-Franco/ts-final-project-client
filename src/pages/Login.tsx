@@ -15,10 +15,12 @@ import { AuthContext } from '@/context/AuthContext'
 type IsUser = {
 	email?: string
 	password?: string
+	isEmployee?: boolean
 }
 
 function Login() {
-	const { setUser, storeToken, authenticateUser } = useContext(AuthContext)
+	const { setUser, storeToken, authenticateUser, getAppointments } =
+		useContext(AuthContext)
 	const [isUser, setIsUser] = useState<IsUser | null>(null)
 	let navigate = useNavigate()
 	const [logMessage, setLogMessage] = useState('')
@@ -43,10 +45,11 @@ function Login() {
 			if (userData.data.password === 'NothingToShow') {
 				// this navigate route its been used on authenticate user FNC
 				// navigate(`/my-bikes/bikes/${userData.data.id}`)
-				storeToken(userData.token)
-				authenticateUser()
-				setUser(userData.data)
 
+				storeToken(userData.token)
+				setUser(userData.data)
+				authenticateUser()
+				getAppointments()
 				setLogMessage('')
 			}
 		} catch (error) {

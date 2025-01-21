@@ -38,6 +38,7 @@ function MyAppointments() {
 		}
 	})
 	console.log('apointments', appo)
+	console.log('tests', test2)
 
 	if (test2.length === 0) {
 		return (

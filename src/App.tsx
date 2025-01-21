@@ -7,9 +7,11 @@ import IntroMessage from './pages/IntroMessage'
 import { Route, Routes } from 'react-router-dom'
 import SignUp from './pages/SignUp'
 import { ProtectedRoutes } from './components/ProtectedRoutes'
+import { EmployeeRoutes } from './components/EmployeeRoutes'
 import MyPage from './pages/MyPage'
 import MyProfile from './pages/MyProfile'
 import MyAppointments from './pages/MyAppointments'
+import AllAppointments from './pages/AllAppointments'
 function App() {
 	return (
 		<div className='h-screen'>
@@ -18,6 +20,14 @@ function App() {
 				<Route path='/' element={<IntroMessage />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/sign-up' element={<SignUp />} />
+				<Route
+					path='/all-appointments'
+					element={
+						<EmployeeRoutes>
+							<AllAppointments />
+						</EmployeeRoutes>
+					}
+				/>
 				<Route
 					path='/my-bikes/bikes/:userId'
 					element={

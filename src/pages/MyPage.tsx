@@ -63,7 +63,7 @@ function MyPage() {
 	const [myBikes, setMyBikes] = useState<Bike[] | undefined>([])
 	const APIURL = import.meta.env.VITE_APIURL
 	const { userId } = useParams()
-	console.log('my bikes page', user)
+	console.log('my bikes page', myBikes)
 
 	useEffect(() => {
 		async function getBikes() {
@@ -72,32 +72,15 @@ function MyPage() {
 					`${APIURL}/my-page/bikes/${userId}`
 				)
 				let data = await getMyBikes.json()
-				// console.log('data received', data)
+				console.log('data received', data)
 
 				setUser({ ...user, bikes: data })
 				setMyBikes(data)
-			} catch (error) {}
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
-		// async function getAppointments() {
-		// 	try {
-		// 		let response = await fetch(
-		// 			`${APIURL}/my-page/appointments/${userId}`,
-		// 			{
-		// 				method: 'GET',
-		// 				headers: {
-		// 					Accept: 'application/jon',
-		// 				},
-		// 			}
-		// 		)
-		// 		let data = await response.json()
-
-		// 		SetAppointments(data)
-		// 	} catch (err) {
-		// 		console.log(err)
-		// 	}
-		// }
-		// getAppointments()
 		getBikes()
 	}, [user.id])
 
