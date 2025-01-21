@@ -111,7 +111,7 @@ function SignUp() {
 								/>
 							</div>
 							<div className='flex flex-col space-y-1.5'>
-								<Label htmlFor='password'>Email</Label>
+								<Label htmlFor='password'>Password</Label>
 								<Input
 									id='password'
 									placeholder='Password'
