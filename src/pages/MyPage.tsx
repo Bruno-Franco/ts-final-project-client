@@ -63,6 +63,7 @@ function MyPage() {
 	const [myBikes, setMyBikes] = useState<Bike[] | undefined>([])
 	const APIURL = import.meta.env.VITE_APIURL
 	const { userId } = useParams()
+	console.log('my bikes page', user)
 
 	useEffect(() => {
 		async function getBikes() {

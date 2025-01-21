@@ -6,7 +6,7 @@ import { Button } from './ui/button'
 import { PhoneCallIcon } from 'lucide-react'
 
 function Navbar() {
-	const { user, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+	const { user, isLoggedIn, handleLogout } = useContext(AuthContext)
 
 	return (
 		<nav className='w-full flex justify-between content-center h-20 px-4 py-3 sm:px-6 lg:px-8'>
@@ -28,7 +28,7 @@ function Navbar() {
 					|
 					<Button
 						onClick={() => {
-							setIsLoggedIn(false)
+							handleLogout()
 						}}
 					>
 						Logout

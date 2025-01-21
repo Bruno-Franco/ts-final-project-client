@@ -18,7 +18,7 @@ type IsUser = {
 }
 
 function Login() {
-	const { setIsLoggedIn, setUser, printUser } = useContext(AuthContext)
+	const { setUser, storeToken, authenticateUser } = useContext(AuthContext)
 	const [isUser, setIsUser] = useState<IsUser | null>(null)
 	let navigate = useNavigate()
 	const [logMessage, setLogMessage] = useState('')
@@ -33,18 +33,20 @@ function Login() {
 				body: JSON.stringify(isUser),
 			})
 
-			let data = await response.json()
+			let userData = await response.json()
 
 			// this if statement came from auth routes!!
-			if (data.message === 'No access!') {
+			if (userData.data.message === 'No access!') {
 				setLogMessage(`Access DENIED!!`)
 			}
 
-			if (data.password === 'NothingToShow') {
-				setIsLoggedIn(true)
-				setUser(data)
-				printUser()
-				navigate(`/my-bikes/bikes/${data.id}`)
+			if (userData.data.password === 'NothingToShow') {
+				// this navigate route its been used on authenticate user FNC
+				// navigate(`/my-bikes/bikes/${userData.data.id}`)
+				storeToken(userData.token)
+				authenticateUser()
+				setUser(userData.data)
+
 				setLogMessage('')
 			}
 		} catch (error) {

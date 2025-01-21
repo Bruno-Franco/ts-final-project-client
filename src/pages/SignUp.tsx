@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardContent,
+	CardDescription,
+} from '@/components/ui/card'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
 import { useNavigate } from 'react-router'
@@ -9,20 +15,31 @@ type NewUser = {
 	firstName?: string
 	email?: string
 	password?: string
+	isEmployee?: boolean
+}
+
+const initialStateNewUser = {
+	firstName: '',
+	email: '',
+	password: '',
+	isEmployee: false,
 }
 
 function SignUp() {
 	let navigate = useNavigate()
 	const APIURL = import.meta.env.VITE_APIURL
-	const [newUser, setNewUser] = useState<NewUser | undefined>(undefined)
+	const [logMessage, setLogMessage] = useState('')
+	// const [newUser, setNewUser] = useState<NewUser | undefined>(undefined)
+	const [newUser, setNewUser] = useState<
+		NewUser | typeof initialStateNewUser
+	>(initialStateNewUser)
 
 	async function handleNewUser(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
-		console.log('>>>>>>>>>>>', newUser)
-		console.log('>>>>>>>>>>>', APIURL)
+
 		// create user
 		// always include headers
-		await fetch(`${APIURL}/auth/signup`, {
+		let response = await fetch(`${APIURL}/auth/signup`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application.json',
@@ -30,13 +47,25 @@ function SignUp() {
 			},
 			body: JSON.stringify(newUser),
 		})
-		navigate('/login')
+		let data = await response.json()
+		if (data.message === 'Error') {
+			setLogMessage(`Resource Already Taken!!`)
+		} else {
+			navigate('/login')
+		}
 	}
 	return (
 		<div className='h-[500px] flex items-center justify-center'>
 			<Card className='w-[350px]'>
 				<CardHeader>
 					<CardTitle>Sign Up</CardTitle>
+					{logMessage !== '' ? (
+						<CardDescription className='text-red-600'>
+							{logMessage}
+						</CardDescription>
+					) : (
+						''
+					)}
 				</CardHeader>
 				<CardContent>
 					<form
